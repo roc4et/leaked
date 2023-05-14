@@ -1,0 +1,1 @@
+pyinstaller --noconfirm --clean --onefile --console --icon "C:\Users\roc4e\OneDrive\Desktop\Leaked Multitool\icon.png" --name "Leakedfn"  "C:\Users\roc4e\OneDrive\Desktop\Leaked Multitool\main.py"
