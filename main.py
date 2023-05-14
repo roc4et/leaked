@@ -8,7 +8,12 @@ from pystyle import *
 import msvcrt
 import smtplib
 import random
+import time
 
+
+response = requests.get('https://raw.githubusercontent.com/roc4et/leaked/main/version')
+print(response.text)
+time.sleep(1)
 version= "1.0"
 
 
@@ -126,29 +131,33 @@ def iplookup(ip):
     msvcrt.getch()
     menue()
 
-def stw_receipt(weekday,month,day,year,email):
+def stw_receipt(weekday, month, day, year, email):
     try:
-        with open('html/stw.html', 'r') as f:
-            html = f.read()
-        # Replace the placeholders in the HTML template with the specified values
-        html = html.replace("Monday, July 23, 2018", f"{weekday}, {month} {day}, {year}")
-        html = html.replace("133", str(random.randint(100, 999)))
-        html = html.replace("109", str(random.randint(100, 999)))
-        # Set up the email message
-        msg = MIMEMultipart()
-        msg['From'] = 'Leaked receipt-maker by roc4et#0001'
-        msg['To'] = f'{email}'
-        msg['Subject'] = 'Your STW receipt is ready:'
-        msg.attach(MIMEText(html, 'html'))
-        # Connect to the Gmail SMTP server and send the email
-        with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
-            smtp.starttls()
-            smtp.login('epicgames.receipt.roc4et@gmail.com', 'ukbyjlggvlneoskt')
-            smtp.send_message(msg)
-        print(Colorate.Horizontal(Colors.green_to_cyan,f"\n    Your STW receipt has been successfully sent to {email}."))
-    except:
-        print(Colorate.Horizontal(Colors.red_to_yellow,f"\n    Your receipt has hasent been sent, because an error occurred. \n\n"))
-    print(Colorate.Horizontal(Colors.blue_to_purple,f"\n    Press any key to continue!"))
+        url = "https://raw.githubusercontent.com/roc4et/leaked/main/html/stw.html"
+        response = requests.get(url)
+        if response.status_code == 200:
+            html = response.text
+            # Replace the placeholders in the HTML template with the specified values
+            html = html.replace("Monday, July 23, 2018", f"{weekday}, {month} {day}, {year}")
+            html = html.replace("133", str(random.randint(100, 999)))
+            html = html.replace("109", str(random.randint(100, 999)))
+            # Set up the email message
+            msg = MIMEMultipart()
+            msg['From'] = 'Leaked receipt-maker by roc4et#0001'
+            msg['To'] = f'{email}'
+            msg['Subject'] = 'Your STW receipt is ready:'
+            msg.attach(MIMEText(html, 'html'))
+            # Connect to the Gmail SMTP server and send the email
+            with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+                smtp.starttls()
+                smtp.login('epicgames.receipt.roc4et@gmail.com', 'ukbyjlggvlneoskt')
+                smtp.send_message(msg)
+            print(Colorate.Horizontal(Colors.green_to_cyan, f"\n    Your STW receipt has been successfully sent to {email}."))
+        else:
+            raise Exception("Failed to fetch the HTML template.")
+    except Exception as e:
+        print(Colorate.Horizontal(Colors.red_to_yellow, f"\n    Your receipt hasn't been sent, because an error occurred: {str(e)} \n\n"))
+    print(Colorate.Horizontal(Colors.blue_to_purple, f"\n    Press any key to continue!"))
     msvcrt.getch()
     menue()
 
