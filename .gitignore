@@ -1,0 +1,13 @@
+
+compile.bat
+dist/Leakedfn.exe
+Leakedfn.exe
+img/icon.png
+mass_friend_list_export.cmd
+start.bat
+scraped/scraped_friends.txt
+scraped/scraped.txt
+scraped/names.txt
+scraped.txt
+mass_friend_list_export.py
+main.py
